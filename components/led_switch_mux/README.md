@@ -33,8 +33,16 @@ One can use a single array of pins for both driving LEDs and reading switch stat
 
 Simply instantiate it as is, after fixing the code someday.
 
+## Tests
+
+Currently, there are none. :)
+
 ### Generics
 
+- `led_rows`
+    - represents the number od LED driver pins (`LEDEN`)
+- `led_columns`
+    - represents the number of switch/LED common pins (`LEDSW`)
 - `led_period`
     - sets the time for which the LEDs stay on before switching to the next row
     - value is in clock cycles
@@ -52,7 +60,11 @@ Simply instantiate it as is, after fixing the code someday.
     - registered switch states
 - in `leds`
     - led states to display
+    - all rows in one bundle
+        - row 0: 7..0
+        - row 1: 15..8
+        - ...
 - inout `ledsw`
     - tristate `LEDSW` bus as in the schematic
-- out `led_en`
+- out `leden`
     - LED driver outputs, `LEDEN` in the schematic
