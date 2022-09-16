@@ -6,7 +6,11 @@ It still needs additional logic to be able to actually send data to devices.
 
 But adding that Should™ be easy.
 
-## How it will work
+Also, you're in luck! This module has a basic testbench driving it! Check out the `test/` directory to be horrified.
+
+[ ] TODO: Write a better description.
+
+## How it should work
 
 An informal spec of the component's function
 
@@ -73,13 +77,15 @@ An informal spec of the component's function
 
 ### State diagram
 
+See `doc/` directory for graphviz files.
+
+[ ] TODO: Include the rendered images here once I figure out how to do so in some sensible manner.
 
 ### Usage
 
 This I2C master only handles the basic line framing, such as the START and STOP states, byte transmission and ACK readback.
 
 To actually read or write data from an I2C device, you have to implement a higher level controller/sequencer on top of this one.
-
 
 #### To write N bytes to a device:
 - Start transaction
