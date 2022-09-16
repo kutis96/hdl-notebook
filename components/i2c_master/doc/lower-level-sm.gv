@@ -1,0 +1,44 @@
+digraph {
+    node [shape=circle fixedsize=true width=1.8]
+    IDLE [shape=doublecircle width=1.2]
+    START, STOP [width=1]
+
+    IDLE [label="IDLE\ntxn_ack = 0"]
+    IDLE -> IDLE
+    IDLE -> START [ label = "txn_req = 1" ]
+    START -> TRANSACTION
+    START -> START [ label = "⏳" ]
+    STOP -> STOP [ label = "⏳" ]
+    STOP -> IDLE
+
+    TRANSACTION [ label = "TRANSACTION\ntxn_ack = 1\ndata_rx_ack = 0\ndata_tx_ack = 0" ]
+    TRANSACTION -> STOP [ label = "txn_req = 0" ]
+    TRANSACTION -> TRANSACTION
+
+    TRANSACTION -> RECEIVE [ label = "data_rx_req = 1" ]
+    RECEIVE [ label = "RECEIVING\ndata_rx_ack = 1"]
+    RECEIVE -> RECEIVE [ label = "⏳" ]
+    RECEIVE -> TRANSACTION [ label = "data_rx_req = 0"]
+
+    TRANSACTION -> TRANSMIT [ label = "data_tx_req = 1" ]
+    TRANSMIT [ label = "TRANSMITTING\ndata_tx_ack = 1"]
+    TRANSMIT -> TRANSMIT [ label = "⏳" ]
+    TRANSMIT -> TRANSACTION [ label = "data_tx_req = 0"]
+
+    RECEIVE -> DONE [ label = "data_tx_req = 1"]
+    TRANSMIT -> DONE [ label = "data_tx_req = 1"]
+    
+    DONE [ label = "DONE\ndata_rx_ack = 0\ndata_tx_ack = 0\n"]
+    DONE -> TRANSACTION [ label = "data_tx_req = 0\n& data_rx_req = 0"]
+    DONE -> DONE
+
+    // TRANSACTION -> FAULT
+    // IDLE -> FAULT
+    // START -> FAULT
+    // STOP -> FAULT
+    // DONE -> FAULT
+    // FAULT -> IDLE
+
+    { rank=same; RECEIVE, TRANSMIT }
+    { rank=same; START, STOP }
+}

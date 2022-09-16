@@ -1,0 +1,21 @@
+digraph {
+    node [shape = circle]
+    IDLE [shape = doublecircle]
+
+    IDLE -> IDLE
+    IDLE -> START [ label = "begin\ntransaction!" ]
+    START -> TRANSACTION
+    START -> START
+    TRANSACTION -> RECEIVE [ label = "receive\na byte!" ]
+    TRANSACTION -> TRANSMIT [ label = "transmit\na byte!" ]
+    RECEIVE -> RECEIVE
+    RECEIVE -> TRANSACTION
+    TRANSMIT -> TRANSMIT
+    TRANSMIT -> TRANSACTION
+    TRANSACTION -> STOP [ label = "end\ntransaction!" ]
+    TRANSACTION -> TRANSACTION
+    STOP -> IDLE
+    STOP -> STOP
+    { rank=same; RECEIVE, TRANSMIT }
+    { rank=same; START, STOP }
+}
